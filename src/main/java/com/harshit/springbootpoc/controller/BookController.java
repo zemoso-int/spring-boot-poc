@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @RestController
 public class BookController {
@@ -25,19 +27,14 @@ public class BookController {
 
     Logger logger = LoggerFactory.getLogger(BookController.class);
 
-    @GetMapping(value = "/books")
-    public List<BookResponse> getAllBooks(){
-        return bookService.getAllBooks();
-    }
-
     @GetMapping(value = "/books/highlights")
     public List<BooksHighlightsResponse> getBooksHighlights(){
         return bookService.getBookHighlights();
     }
 
     @GetMapping(value = "/books/search")
-    public List<BookResponse> getBooksBasedOnKeyword(@RequestParam("keyword") String keyword){
-        return bookService.getBooksBasedOnSearch(keyword);
+    public List<BookResponse> getBooksBasedOnKeyword(@RequestParam("keyword") Optional<String> keyword){
+        return keyword.isPresent() ? bookService.getBooksBasedOnSearch(String.valueOf(keyword)) : bookService.getAllBooks();
     }
 
     @GetMapping(value = "/books/{bookId}")

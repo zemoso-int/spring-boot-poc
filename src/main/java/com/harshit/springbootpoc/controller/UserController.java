@@ -18,23 +18,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/books/currently-reading")
-    public UserResponse getReadingBooksByUser(@RequestHeader("userId") Integer userId) throws UserNotFoundException {
+    @GetMapping(value = "{userId}/books/currently-reading")
+    public UserResponse getReadingBooksByUser(@PathVariable("userId") Integer userId) throws UserNotFoundException {
         return userService.getReadingBooksBasedOnUser(userId);
     }
 
-    @GetMapping(value = "/books/finished")
-    public UserResponse getCompletedBooksByUser(@RequestHeader("userId") Integer userId) throws UserNotFoundException {
+    @GetMapping(value = "{userId}/books/finished")
+    public UserResponse getCompletedBooksByUser(@PathVariable("userId") Integer userId) throws UserNotFoundException {
         return userService.getFinishedBooksBasedOnUser(userId);
     }
 
-    @GetMapping(value = "/books/{bookId}")
-    public boolean addBookToUsersLibrary(@RequestHeader("userId") Integer userId, @PathVariable("bookId") Integer bookId) throws BookNotFoundException {
+    @PostMapping(value = "{userId}/books/{bookId}")
+    public boolean addBookToUsersLibrary(@PathVariable("userId") Integer userId, @PathVariable("bookId") Integer bookId) throws BookNotFoundException {
         return userService.addBookToUsersLibrary(userId,bookId);
     }
 
-    @GetMapping(value = "/books/{bookId}/status")
-    public boolean changeBookStatusOfUser(@RequestHeader("userId") Integer userId,@PathVariable("bookId") Integer bookId) throws UserNotFoundException {
+    @PutMapping(value = "{userId}/books/{bookId}/status")
+    public boolean changeBookStatusOfUser(@PathVariable("userId") Integer userId,@PathVariable("bookId") Integer bookId) throws UserNotFoundException {
         return userService.changeStatusOfBook(userId, bookId);
     }
 
