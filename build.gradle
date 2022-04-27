@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.sonarqube" version "3.3"
 }
 
 group = 'com.harshit'
@@ -28,6 +29,11 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.0'
 	//jdbc
 	implementation 'mysql:mysql-connector-java:8.0.13'
+	//thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
 	//tests
 	testImplementation 'junit:junit'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
@@ -36,6 +42,14 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "harshitVidhyarthi_spring_boot_poc"
+		property "sonar.organization", "zemoso-int"
+		property "sonar.host.url", "https://sonarcloud.io"
+	}
 }
 
 tasks.named('test') {
